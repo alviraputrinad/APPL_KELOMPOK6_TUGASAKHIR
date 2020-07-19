@@ -13,7 +13,6 @@ public class Menu {
     private static Tutors t;
     private static Students s;
     private static User u;
-    private static Quiz q = new Questions();
     private static int qId = 1;
     private static int TestTaken =0;
     private static StudentList studentList = new StudentList();
@@ -22,7 +21,6 @@ public class Menu {
     private static QuizList quizList = new QuizList();
     private static PointRecapitulation pointRecap = new PointRecapitulation();
     private static UserList uList = new UserList();
-    private static QuizList qList = new QuizList();
 
 
     public static void runTest (String idStudent, String code){
@@ -269,7 +267,7 @@ public class Menu {
                         //q.getQuestion();
                         break;
                     case 6:
-                    	qList.showBestWorstPoint(idQuiz);
+                    	quizList.showBestWorstPoint(idQuiz);
                         break;
                     case 7:
                         String removeId;
