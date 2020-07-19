@@ -3,6 +3,7 @@
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Menu {
@@ -133,6 +134,46 @@ public class Menu {
         }
         tutorMenu();//tutor log in
     }
+    public static void createQuiz(Quiz quiz) throws FileNotFoundException {
+    	String qText = null, qAnswer, qTAnswer;
+    	HashMap <String, String> qListAnswer = new HashMap<String, String>();
+    	Questions qQuiz;
+    	switch(quiz.getType()) {
+    		case 1 :
+    			qTAnswer = "";
+    			qText = "";
+    			for(int i = 0; i < quiz.getNQuiz(); i++) {
+    				 System.out.println("No " + i+1);
+    				 System.out.println("Question : ");
+    				 qText = in.nextLine();
+    				 System.out.println("Please enter multiple option...");
+    				 for(int j = 0; j < 4; j++) {
+    					 System.out.println("Option #"+ j+1 +":" );
+    					 qAnswer = in.nextLine();
+    					 qListAnswer.put(Integer.toString(j+1), qAnswer);
+    				 }
+    				 System.out.println("The right option is : (1/2/3/4)");
+    				 qTAnswer = in.nextLine();
+    				 qQuiz = new Questions(qText, qTAnswer, qListAnswer);
+    				 quiz.addQuestion(qQuiz);	 
+    				 break;
+    			}
+    		case 2 : 
+    			for(int i = 0; i < quiz.getNQuiz(); i++) {
+    				 System.out.println("No " + i+1);
+    				 System.out.println("Question : ");
+    				 qText = in.nextLine();
+    				 qListAnswer.put("","TRUE");
+    				 qListAnswer.put("","FALSE");
+    			}
+    			System.out.println("The right option is : (TRUE/FALSE)");
+				qTAnswer = in.nextLine();
+				qQuiz = new Questions(qText, qTAnswer, qListAnswer);
+				quiz.addQuestion(qQuiz);
+				break;
+    	}
+    	
+    }
     public static void tutorMenu() {
         while (true){
             System.out.println("Please choose one of the below option: (Option Number)" +
@@ -186,24 +227,29 @@ public class Menu {
                         }
                         break;
                     case 3:
-                        int points;
-                        String qText, qAnswer;
-                        System.out.println("Question ID: "+ qId);
-                        System.out.println("Question: ");
-                        in.nextLine();
-                        qText = in.nextLine();
-                        System.out.println("Answer: ");
-                        qAnswer = in.nextLine();
-                        while(true) {
-                            if (!(qAnswer.toLowerCase().equals("yes") || qAnswer.toLowerCase().equals("no"))) {
-                                System.out.println("Please enter yes or no! ");
-                                qAnswer = in.nextLine();
-                            } else break;
-                        }
-                        System.out.println("Points: ");
-                        points = in.nextInt();
-                        //q.addQuestion(qId,qText,qAnswer,points);
-                        qId++;
+                        String qTitle, qCode,  qId;
+                        int nQuiz, qType, qTime;
+                        double qPoint;
+                        System.out.println("Enter Title");
+                        qTitle = in.next();
+                        System.out.println("Enter Id: ");
+                        qId = in.next();
+                        System.out.println("Enter Code: ");
+                        qCode = in.next();
+                        System.out.println("1. Multiple choice\n" + 
+                        					"2. True/False\n" +
+                        					"Type Test :"
+                        					);
+                        qType = in.nextInt();
+                        System.out.println("how many questions will be created?");
+                        nQuiz = in.nextInt();
+                        System.out.println("how long it takes? (s)");
+                        qTime = in.nextInt();
+                        System.out.println("point per question : ");
+                        qPoint = in.nextInt();
+                        Quiz quiz = new Quiz(qId, qCode, qType, qTime, qTitle, qPoint, nQuiz);
+                        createQuiz(quiz);
+                        quizList.addQuiz(quiz);
                         break;
                     case 4:
                         int enterId;
@@ -214,7 +260,7 @@ public class Menu {
                         //q.getQuestion();
                         break;
                     case 6:
-                    	quizList.showBestWorstPoint(idQuiz);
+                    	quizList.showBestWorstPoint(qId);
                         break;
                     case 7:
                         String removeId;

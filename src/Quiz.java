@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Quiz {
@@ -6,28 +7,29 @@ public class Quiz {
     private String code;
     private int type;
     private int time;
+    private int nQuiz;
     private String title;
     private double questionPoint;
     
-    private List<Questions> questionList = new ArrayList<>();
+    private List<Questions> questionList;
     private ArrayList<PointRecapitulation> pointRecap = new ArrayList<>();
     
     public Quiz() {}
     
-    public Quiz(String idQuiz, String code, int type, int time, String title, double questionPoint,
-    			List<Questions> questionList) {
+    public Quiz(String idQuiz, String code, int type, int time, String title, double questionPoint, int nQuiz) {
     this.setIdQuiz(idQuiz);
     this.setCode(code);
     this.setType(type);
     this.setTime(time);
     this.setTitle(title);
+    this.setNQuiz(nQuiz);
     this.setQuestionPoint(questionPoint);	
-    this.questionList = questionList;
+    //this.questionList = questionList;
 }
 
     public void bestWorstPoint(){}
 
-
+    
 	public ArrayList<PointRecapitulation> getPointRecap() {
 		return pointRecap;
 	}
@@ -43,7 +45,17 @@ public class Quiz {
 		}
 		return question;
 	}
+	public void addQuestion(Questions quiz) {
+		
+		this.questionList.add(quiz);
+	}
 	
+	public void setNQuiz(int nQuiz) {
+		this.nQuiz = nQuiz;
+	}
+	public int getNQuiz() {
+		return nQuiz;
+	}
 	public String getIdQuiz() {
 		return idQuiz;
 	}

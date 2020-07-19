@@ -12,6 +12,10 @@ public class QuizList {
 		return quiz;
 	}
 	
+	public void addQuiz(Quiz quiz) {
+		this.quiz.add(quiz);
+	}
+	
 	public Quiz getQuizbyCode(String code){
 		for (Quiz q : quiz) {
 	        if (q.getCode().equals(code)) {
