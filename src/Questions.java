@@ -2,74 +2,49 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Questions {
-    private int questionId=1;
+    private int questionId=0;
     private String questionText;
-    private boolean questionAnswer;
-    private int questionPoints;
-    private ArrayList<Questions> questions = new ArrayList<>();
-
+    private String questionAnswer;
+    private HashMap<String, String> listAnswer;
     public Questions(){}
 
-    public Questions(int questionId, String questionText, String questionAnswer, int questionPoints) throws FileNotFoundException {
-        this.questionId = questionId;
+    public Questions( String questionText, String questionAnswer, HashMap<String, String> listAnswer) throws FileNotFoundException {
+        this.questionId = questionId+1;
+        questionId =  questionId+1;
+        this.listAnswer = listAnswer;
         this.questionText = questionText;
-        validateAnswer(questionAnswer);
-        this.questionPoints = questionPoints;
     }
 
-    public void addQuestion(int questionId, String questionText, String questionAnswer, int questionPoints) throws FileNotFoundException {
-        questions.add(new Questions(questionId, questionText, questionAnswer, questionPoints)); //add new question
+    public void addQuestionToFile() throws FileNotFoundException {
         PrintWriter txt = new PrintWriter("question.txt");
-        for(int x = 0; x<questions.size();x++){
-            txt.print(questions.get(x).getquestionId()+ ". ");
-            txt.println(questions.get(x).getquestionText() + "?");
-            txt.println("Answer: "+ questions.get(x).isquestionAnswer());
-            txt.println("Points: " + questions.get(x).getquestionPoints());
+            txt.print(this.getquestionId()+ ". ");
+            txt.println(this.getQuestionText() + "?");
+            for (String i : this.listAnswer.keySet()) {
+            	txt.println(i+". "+ this.listAnswer.get(i));
+            }
+            txt.println("Answer: "+ this.getQuestionAnswer());
             txt.println("--------------------");
             txt.flush();
+            txt.close();
+        } 
+       
 
-        }  // write questions from arraylist to txt file
-        txt.close ();
+    public String getQuestionText() {
+        return this.questionText;
     }
-
-    public void validateAnswer(String answer){
-        if (answer.toLowerCase().equals("yes"))
-            setquestionAnswer(true);
-        else if (answer.toLowerCase().equals("no"))
-            setquestionAnswer(false);
-    } // convert yes/no answers to true/false
-
-    public void getQuestion() {
-        if (questions.size()==0) // do not count default question
-            System.out.println("There are no questions");
-        for (int i = 0; i < questions.size(); i++) {
-            System.out.println(i+1 + ". " + questions.get(i).getquestionText());
-        }
-    } // show all the questions
-
-
+    
     public int getquestionId(){
-        return questionId;
+        return this.questionId;
     }
 
-    public String getquestionText() {
-        return questionText;
+    public HashMap<String, String> getListQuestion() {
+    	return this.listAnswer;
     }
-
-    public boolean isquestionAnswer(){
+    public String getQuestionAnswer(){
         return questionAnswer;
     }
 
-    public int getquestionPoints() {
-        return questionPoints;
-    }
-
-    public void setquestionAnswer(boolean questionAnswer) {
-        this.questionAnswer = questionAnswer;
-    }
-
-    public ArrayList<Questions> getQuestionsArray(){ return questions;
-    }
 }
