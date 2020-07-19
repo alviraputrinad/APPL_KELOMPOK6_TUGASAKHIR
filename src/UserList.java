@@ -16,6 +16,9 @@ public class UserList {
 	public void addTutor(String id, String name ,String surname, String password) {
 		
 	}
+	public void removeStudent(String id) {
+		
+	}
 	
 	public ArrayList<Students> getAllStudent(){
 		return listStudent;

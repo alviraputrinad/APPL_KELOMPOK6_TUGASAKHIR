@@ -7,11 +7,15 @@ public class Menu {
     private static Scanner in = new Scanner(System.in);
     private static Tutors t;
     private static Students s;
-    private static Users u;
+    private static User u;
     private static Quiz q = new Questions();
     private static int qId = 1;
     private static int TestTaken =0;
     private static StudentList studentList = new StudentList();
+    private static UserList uList = new UserList();
+    private static QuizList qList = new QuizList();
+    
+    
 
     public static void runTest (int index){
         String answer;
@@ -167,27 +171,27 @@ public class Menu {
                         stName = in.next();
                         System.out.println("Surname: ");
                         stSurname = in.next();
-                        System.out.println("Date of Birth: \nDay: ");
-                        day = in.nextInt();
-                        System.out.println("Month: ");
-                        month = in.nextInt();
-                        System.out.println("Year: ");
-                        year= in.nextInt();
-                        LocalDate dateOfBirth = LocalDate.of(year,month,day);
-                        java.util.Date date = java.sql.Date.valueOf(dateOfBirth);
+//                        System.out.println("Date of Birth: \nDay: ");
+//                        day = in.nextInt();
+//                        System.out.println("Month: ");
+//                        month = in.nextInt();
+//                        System.out.println("Year: ");
+//                        year= in.nextInt();
+//                        LocalDate dateOfBirth = LocalDate.of(year,month,day);
+//                        java.util.Date date = java.sql.Date.valueOf(dateOfBirth);
                         while (true) {
                             System.out.println("Student ID: ");
                             stId = in.nextInt();
                             if (s.getId() == stId) {
-                              //  s.addStudent(stId, stName, stSurname, date, 0, 0, false);
+                                uList.addStudent();
                                 break;
                             } else
                                 System.out.println("This ID is already registered!");
                         }
                         break;
                     case 2:
-                        int ttId;
-                        String ttName, ttSurname, password;
+                        
+                        String ttName, ttSurname, password, ttId;
                         System.out.println("Name: ");
                         ttName = in.next();
                         System.out.println("Surname: ");
@@ -195,15 +199,15 @@ public class Menu {
                         while (true){
                             System.out.println("Password: ");
                             password = in.next();
-                         //   t.validatePassword(password);
+                            t.validatePassword(password);
                             if (t.getPassword()!=null)
                                 break;
                         }
                         while (true) {
                             System.out.println("Tutor ID: ");
-                            ttId = in.nextInt();
+                            ttId = in.next();
                             if(t.getId()==-1) {
-                               // t.addTutor(ttId,ttName,ttSurname,password);
+                            	uList.addTutor(ttId,ttName,ttSurname,password);
                                 break;
                             } else
                                 System.out.println("This ID is already registered!");
@@ -231,23 +235,20 @@ public class Menu {
                         break;
                     case 4:
                         int enterId;
-                        //System.out.println("Enter student ID: ");
-                        //enterId = in.nextInt();
-                        //s.getStudent(enterId);
                         
-                        //Display All data
+                        System.out.println(uList.getAllStudent());
                         break;
                     case 5:
                         //q.getQuestion();
                         break;
                     case 6:
-                       // s.displayBestWorstStudent();
+                    	qList.showBestWorstPoint(idQuiz);
                         break;
                     case 7:
-                        int removeId;
+                        String removeId;
                         System.out.println("Student ID: ");
-                        removeId = in.nextInt();
-                        //s.removeStudent(removeId);
+                        removeId = in.next();
+                        uList.removeStudent(removeId);
                         break;
                     case 8:
                         //s.getFailedStudent();

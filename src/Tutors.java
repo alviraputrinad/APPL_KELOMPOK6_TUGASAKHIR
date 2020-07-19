@@ -40,7 +40,9 @@ public class Tutors extends User {
         return super.getName();
     }
 
-
+    public void validatePassword(String pass) {
+    	
+    }
     public String getPassword() {
         return password;
     }
