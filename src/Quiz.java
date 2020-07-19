@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Quiz {
-	private String idQuiz;
     private String code;
     private int type;
     private int time;
@@ -14,9 +13,8 @@ public class Quiz {
     
     public Quiz() {}
     
-    public Quiz(String idQuiz, String code, int type, int time, String title, double questionPoint,
+    public Quiz(String code, int type, int time, String title, double questionPoint,
     			List<Questions> questionList) {
-    this.setIdQuiz(idQuiz);
     this.setCode(code);
     this.setType(type);
     this.setTime(time);
@@ -42,14 +40,6 @@ public class Quiz {
 			question.add(gettingQuestionList().get(i).getQuestionText());
 		}
 		return question;
-	}
-	
-	public String getIdQuiz() {
-		return idQuiz;
-	}
-
-	public void setIdQuiz(String idQuiz) {
-		this.idQuiz = idQuiz;
 	}
 
 	public String getCode() {

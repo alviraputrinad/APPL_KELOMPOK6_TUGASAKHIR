@@ -1,20 +1,20 @@
 public class PointRecapitulation {
 	
-	private String idStudent;
+	private int idStudent;
     private double point;
     
     public PointRecapitulation() {}
     
-    public PointRecapitulation(String idStudent, double point) {
+    public PointRecapitulation(int idStudent, double point) {
     	this.idStudent=idStudent;
     	this.point=point;
     }
     
-	public String getIdStudent() {
+	public int getIdStudent() {
 		return idStudent;
 	}
 	
-	public void setIdStudent(String idStudent) {
+	public void setIdStudent(int idStudent) {
 		this.idStudent = idStudent;
 	}
 	
