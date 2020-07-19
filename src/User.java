@@ -2,24 +2,22 @@
 public abstract class User {
     private int id;
     private String name;
-    private String surname;
 
     public User (){
     }
 
-    public User (int id, String name, String surname){
+    public User (int id, String name){
         this.id = id;
         this.name = name;
-        this.surname = surname;
     }
 
     public int getIndex() {
         return -1;
     }
 
-    public String getFullName (){
-        return "";
-    }
+//    public String getFullName (){
+//        return "";
+//    }
 
     public int getId() {
         return id;
@@ -29,9 +27,9 @@ public abstract class User {
         this.id = id;
     }
 
-    public abstract int getIndex(int id);
+    //public abstract int getIndex(int id);
 
-    public abstract String getFullName(int index);
+    //public abstract String getFullName(int index);
 
     public String getName() {
         return name;
@@ -39,13 +37,5 @@ public abstract class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 }
