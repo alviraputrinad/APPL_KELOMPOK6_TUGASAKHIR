@@ -10,9 +10,10 @@ public class Menu {
 	static final int YESorNO=3;
 	
     private static Scanner in = new Scanner(System.in);
-    private static Tutors t = new Tutors();
-    private static Students s = new Students();
-    private static Questions q = new Questions();
+    private static Tutors t;
+    private static Students s;
+    private static Users u;
+    private static Quiz q = new Questions();
     private static int qId = 1;
     private static int TestTaken =0;
     private static StudentList studentList = new StudentList();
@@ -155,7 +156,7 @@ public class Menu {
             boolean isInt = in.hasNextInt();
             id = in.nextInt();
             if(isInt){
-                if(t.getIndex(id)==-1){
+                if(t.getId() != id){
                     System.out.println("There is no tutor with ID: "+ id);
                     System.out.println("ID: ");
                     in.nextLine();
@@ -163,8 +164,8 @@ public class Menu {
                 }
                 System.out.println("Enter your password;");
                 String password = in.next();
-                if(password.equals(t.getPassword(t.getIndex(id))))
-                    System.out.println("Welcome, "+ t.getFullName(t.getIndex(id)) );
+                if(password.equals(t.getPassword()))
+                    System.out.println("Welcome, "+ t.getName() );
                 else {
                     System.out.println("Incorrect password! Try again!");
                     in.nextLine();
@@ -179,7 +180,7 @@ public class Menu {
         while (true){
             System.out.println("Please choose one of the below option: (Option Number)" +
                     "\n1.Add a new student.\n2.Add a new tutor\n3.Add a new question" +
-                    "\n4.Display data for a student given ID\n5.Display all questions" +
+                    "\n4.Display All Data Student\n5.Display all questions" +
                     "\n6.Display best and worst student\n7.Remove a student\n8. Display failed student" +
                     "\n9. Display number of times the test is taken\n10.Log out.");
             boolean isInt = in.hasNextInt();
@@ -204,8 +205,8 @@ public class Menu {
                         while (true) {
                             System.out.println("Student ID: ");
                             stId = in.nextInt();
-                            if (s.getIndex(stId) == -1) {
-                                s.addStudent(stId, stName, stSurname, date, 0, 0, false);
+                            if (s.getId() == stId) {
+                              //  s.addStudent(stId, stName, stSurname, date, 0, 0, false);
                                 break;
                             } else
                                 System.out.println("This ID is already registered!");
@@ -221,15 +222,15 @@ public class Menu {
                         while (true){
                             System.out.println("Password: ");
                             password = in.next();
-                            t.validatePassword(password);
+                         //   t.validatePassword(password);
                             if (t.getPassword()!=null)
                                 break;
                         }
                         while (true) {
                             System.out.println("Tutor ID: ");
                             ttId = in.nextInt();
-                            if(t.getIndex(ttId)==-1) {
-                                t.addTutor(ttId,ttName,ttSurname,password);
+                            if(t.getId()==-1) {
+                               // t.addTutor(ttId,ttName,ttSurname,password);
                                 break;
                             } else
                                 System.out.println("This ID is already registered!");
@@ -252,29 +253,31 @@ public class Menu {
                         }
                         System.out.println("Points: ");
                         points = in.nextInt();
-                        q.addQuestion(qId,qText,qAnswer,points);
+                        //q.addQuestion(qId,qText,qAnswer,points);
                         qId++;
                         break;
                     case 4:
                         int enterId;
-                        System.out.println("Enter student ID: ");
-                        enterId = in.nextInt();
-                        s.getStudent(enterId);
+                        //System.out.println("Enter student ID: ");
+                        //enterId = in.nextInt();
+                        //s.getStudent(enterId);
+                        
+                        //Display All data
                         break;
                     case 5:
-                        q.getQuestion();
+                        //q.getQuestion();
                         break;
                     case 6:
-                        s.displayBestWorstStudent();
+                       // s.displayBestWorstStudent();
                         break;
                     case 7:
                         int removeId;
                         System.out.println("Student ID: ");
                         removeId = in.nextInt();
-                        s.removeStudent(removeId);
+                        //s.removeStudent(removeId);
                         break;
                     case 8:
-                        s.getFailedStudent();
+                        //s.getFailedStudent();
                         break;
                     case 9:
                         System.out.println("Test is taken " + TestTaken + " times.");
