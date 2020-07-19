@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class QuizList {
@@ -9,5 +10,23 @@ public class QuizList {
 
 	public ArrayList<Quiz> getQuiz() {
 		return quiz;
+	}
+	
+	public Quiz getQuizbyCode(String code){
+		for (Quiz q : quiz) {
+	        if (q.getCode().equals(code)) {
+	        	return q;
+	        }
+	    }
+		return null;
+	}
+	
+	public boolean isQuizExist(String code){
+		for (Quiz q : quiz) {
+	        if (q.getCode().equals(code)) {
+	        	return true;
+	        }
+	    }
+		return false;
 	}
 }

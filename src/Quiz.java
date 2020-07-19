@@ -36,14 +36,14 @@ public class Quiz {
 		return questionList;
 	}
 	
-	public List<Questions> getAllQuestion() {
-		List<Questions> question = new ArrayList<>();
+	public List<String> getAllQuestion() {
+		List<String> question = new ArrayList<>();
 		for(int i =0; i<gettingQuestionList().size(); i++){
-			//question.add(gettingQuestionList().get(i).getquestion_text());
+			question.add(gettingQuestionList().get(i).getQuestionText());
 		}
 		return question;
 	}
-
+	
 	public String getIdQuiz() {
 		return idQuiz;
 	}
