@@ -1,53 +1,80 @@
 
+
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Menu {
+	static final int PILIHAN_GANDA=1;
+	static final int ESSAY=2;
+	static final int YESorNO=3;
+	
     private static Scanner in = new Scanner(System.in);
     private static Tutors t = new Tutors();
     private static Students s = new Students();
     private static Questions q = new Questions();
     private static int qId = 1;
     private static int TestTaken =0;
+    private static Quiz quiz = new Quiz();
+    private static QuizList quizList = new QuizList();
+    private static PointRecapitulation pointRecap = new PointRecapitulation();
 
-    public static void runTest (int index){
+    public static void runTest (String idStudent, String code){
         String answer;
         int points = 0;
         int times = 0;
-        if (q.getQuestionsArray().size()==0)
-            System.out.println("There are no questions");
+        if (quizList.getQuiz().isEmpty()) {
+        	System.out.println("There are no quiz");
+        }
         else {
-            TestTaken++;
-//            times = s.getStudentsArray().get(index).getTimestakenTest() + 1;
-//            s.getStudentsArray().get(index).setTimesTakenTest(times);
-            System.out.println("Times taken a test: " + times);
-        }
-
-
-        for (int i= 0; i< q.getQuestionsArray().size(); i++){
-            System.out.println(i +1 +". " + q.getQuestionsArray().get(i).getquestionText() + "?");
-            answer = in.nextLine();
-            while (true){
-                if (!(answer.toLowerCase().equals("yes") || answer.toLowerCase().equals("no"))) {
-                    System.out.println("Please enter yes or no! ");
-                    answer = in.nextLine();
-                } else break;
-            }
-            if ((answer.toLowerCase().equals("yes") && q.getQuestionsArray().get(i).isquestionAnswer())||(answer.toLowerCase().equals("no") && !q.getQuestionsArray().get(i).isquestionAnswer()))
-                points += q.getQuestionsArray().get(i).getquestionPoints();
-        }
-        s.getStudentsArray().get(index).setTotalPointsFromTests(points);
-        if (q.getQuestionsArray().size()!=0 && s.getStudentsArray().get(index).getTotalPointsFromTests()==0){
-            System.out.println("Sorry you failed.");
-            s.getStudentsArray().get(index).setFailed(true);
-        }
-
-
-    } // run test
-
+        	if(quizList.isQuizExist(code)) {
+        		quiz = quizList.getQuizbyCode(code);
+        		/*
+        		 * get type quiz
+        		 * print question by type
+        		 */
+        		switch(quiz.getType()) {
+        			case PILIHAN_GANDA:
+        				break;
+        			case ESSAY:
+        				break;
+        			case YESorNO:
+        				for (int i= 0; i< quiz.getAllQuestion().size(); i++){
+                    		System.out.println(i +1 +". " + quiz.getAllQuestion().get(i) + "?");
+                    		answer = in.nextLine();
+                    		while (true){
+                    			if (!(answer.toLowerCase().equals("yes") || answer.toLowerCase().equals("no"))) {
+                    				System.out.println("Please enter yes or no! ");
+                    				answer = in.nextLine();
+                    			} else break;
+                    		}
+                    		/*
+                    		 * cek jawaban (ngambil jawabannya gimana?)
+                    		 * total poin
+                    		 */
+                    		
+                    		//if ((answer.toLowerCase().equals("yes") && q.getQuestionsArray().get(i).isquestionAnswer())||(answer.toLowerCase().equals("no") && !q.getQuestionsArray().get(i).isquestionAnswer()))
+                            //points += q.getQuestionsArray().get(i).getquestionPoints();
+        				}
+        				break;
+        		}
+            		/*
+            		 * set total point
+            		 */
+        			pointRecap= new PointRecapitulation(idStudent, points);
+        			//ini butuh ga?
+                	/*if (quiz.getAllQuestion().size()!=0 && s.getStudentsArray().get(index).getTotalPointsFromTests()==0){
+                		System.out.println("Sorry you failed.");
+                		s.getStudentsArray().get(index).setFailed(true);
+                	}*/
+        	}else {
+        		System.out.println("There are no quiz");
+        	}
+        } // run test
+    }
+    
     public static void appMenu() throws FileNotFoundException {
-        t.addTutor(1, "default", "tutor", "00000000"); //default tutor for starting the program
+        //t.addTutor(1, "default", "tutor", "00000000"); //default tutor for starting the program
         //q.addQuestion(0, "Default question", "yes", 0); //default question to handle index out of bound errors
 
         while (true) {

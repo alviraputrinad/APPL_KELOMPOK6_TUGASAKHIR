@@ -3,6 +3,13 @@ public class PointRecapitulation {
 	private String idStudent;
     private double point;
     
+    public PointRecapitulation() {}
+    
+    public PointRecapitulation(String idStudent, double point) {
+    	this.idStudent=idStudent;
+    	this.point=point;
+    }
+    
 	public String getIdStudent() {
 		return idStudent;
 	}
