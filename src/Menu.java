@@ -23,8 +23,6 @@ public class Menu {
     private static Quiz quiz = new Quiz();
     private static QuizList quizList = new QuizList();
     private static PointRecapitulation pointRecap = new PointRecapitulation();
-
-    private static UserList uList = new UserList();
     private static QuizTimer qtimer = new QuizTimer();
 
 

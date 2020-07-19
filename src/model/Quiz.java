@@ -8,6 +8,7 @@ import java.util.List;
 
 
 public class Quiz {
+	private String idQuiz;
     private String code;
     private int type;
     private int time;
@@ -20,15 +21,13 @@ public class Quiz {
     
     public Quiz() {}
     
-    public Quiz(String code, int type, int time, String title, double questionPoint,
-    			List<Questions> questionList) {
+    public Quiz(String isQuiz, String code, int type, int time, String title, double questionPoint, int nQuiz) {
 	    this.setIdQuiz(idQuiz);
 	    this.setCode(code);
 	    this.setType(type);
 	    this.setTime(time);
 	    this.setTitle(title);
 	    this.setQuestionPoint(questionPoint);	
-	    this.questionList = questionList;
 	}
 
 
