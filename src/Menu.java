@@ -24,6 +24,9 @@ public class Menu {
     private static QuizList quizList = new QuizList();
     private static PointRecapitulation pointRecap = new PointRecapitulation();
 
+    private static UserList uList = new UserList();
+    private static QuizTimer qtimer = new QuizTimer();
+
 
 
     
@@ -252,7 +255,7 @@ public class Menu {
                         break;
                     case Constant.DISPLAY_BEST_WORST_STUDENT:
                     	System.out.println("Enter Quiz Id: ");
-                    	String idQuiz = in.next();
+                        String idQuiz = in.nextLine();
                     	quizList.showBestWorstPoint(idQuiz);
                         break;
                     case Constant.REMOVE_STUDENT:
@@ -287,15 +290,19 @@ public class Menu {
         else {
         	if(quizList.isQuizExist(code)) {
         		quiz = quizList.getQuizbyCode(code);
+        		int type = quiz.getType();
         		/*
         		 * get type quiz
         		 * print question by type
         		 */
+        		qtimer.StartTimer(quiz.getTime());
         		switch(quiz.getType()) {
+
         			case Constant.PILIHAN_GANDA:
         				break;
         			case Constant.YESorNO:
         				for (int i = 0; i < quiz.getAllQuestion().size(); i++){
+        					if(qtimer.timer.isRunning())
                     		System.out.println(i + 1 + ". " + quiz.getAllQuestion().get(i) + "?");
                     		answer = in.nextLine();
                     		while (true){
