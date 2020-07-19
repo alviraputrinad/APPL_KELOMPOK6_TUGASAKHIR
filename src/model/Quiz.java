@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -11,10 +12,11 @@ public class Quiz {
     private String code;
     private int type;
     private int time;
+    private int nQuiz;
     private String title;
     private double questionPoint;
     
-    private List<Questions> questionList = new ArrayList<>();
+    private List<Questions> questionList;
     private ArrayList<PointRecapitulation> pointRecap = new ArrayList<>();
     
     public Quiz() {}
@@ -30,9 +32,10 @@ public class Quiz {
 	    this.questionList = questionList;
 	}
 
+
     public void bestWorstPoint(){}
 
-
+    
 	public ArrayList<PointRecapitulation> getPointRecap() {
 		return pointRecap;
 	}
@@ -48,7 +51,17 @@ public class Quiz {
 		}
 		return question;
 	}
+	public void addQuestion(Questions quiz) {
+		
+		this.questionList.add(quiz);
+	}
 	
+	public void setNQuiz(int nQuiz) {
+		this.nQuiz = nQuiz;
+	}
+	public int getNQuiz() {
+		return nQuiz;
+	}
 	public String getIdQuiz() {
 		return idQuiz;
 	}
