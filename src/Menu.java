@@ -19,8 +19,8 @@ public class Menu {
             System.out.println("There are no questions");
         else {
             TestTaken++;
-            times = s.getStudentsArray().get(index).getTimestakenTest() + 1;
-            s.getStudentsArray().get(index).setTimesTakenTest(times);
+//            times = s.getStudentsArray().get(index).getTimestakenTest() + 1;
+//            s.getStudentsArray().get(index).setTimesTakenTest(times);
             System.out.println("Times taken a test: " + times);
         }
 

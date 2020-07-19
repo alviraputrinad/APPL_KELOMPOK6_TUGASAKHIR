@@ -15,9 +15,9 @@ public abstract class User {
         return -1;
     }
 
-    public String getFullName (){
-        return "";
-    }
+//    public String getFullName (){
+//        return "";
+//    }
 
     public int getId() {
         return id;
@@ -27,9 +27,9 @@ public abstract class User {
         this.id = id;
     }
 
-    public abstract int getIndex(int id);
+    //public abstract int getIndex(int id);
 
-    public abstract String getFullName(int index);
+    //public abstract String getFullName(int index);
 
     public String getName() {
         return name;
