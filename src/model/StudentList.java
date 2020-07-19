@@ -1,3 +1,4 @@
+package model;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -54,4 +55,8 @@ public class StudentList extends User{
     	}
     	return null;
 	}
+    
+    public ArrayList<Students> getAllStudent() {
+    	return this.students;
+    }
 }

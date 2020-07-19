@@ -5,10 +5,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import model.*;
+import view.*;
+
 public class Menu {
-	static final int PILIHAN_GANDA=1;
-	static final int ESSAY=2;
-	static final int YESorNO=3;
 	
     private static Scanner in = new Scanner(System.in);
     private static Tutors t;
@@ -17,11 +17,11 @@ public class Menu {
     private static int qId = 1;
     private static int TestTaken =0;
     private static StudentList studentList = new StudentList();
+    private static TutorList tutorList = new TutorList();
 
     private static Quiz quiz = new Quiz();
     private static QuizList quizList = new QuizList();
     private static PointRecapitulation pointRecap = new PointRecapitulation();
-    private static UserList uList = new UserList();
 
 
 
@@ -70,27 +70,23 @@ public class Menu {
         studentMenu(id);//student log in
     }
     
-    public static void studentMenu(int studentId) {
-    	ArrayList<String> wrongAnswer = new ArrayList<>();
+    public static void studentMenu(int studentId) throws FileNotFoundException {
+    	ArrayList<Integer> wrongAnswer = new ArrayList<>();
         while (true){
-            System.out.println("Please choose one of the below option: (Option Number)" +
-                    "\n1. Run a test" +
-                    "\n2. Display total points " +
-                    "\n3. Log out.");
+        	Display.studentMenu();
             boolean isInt = in.hasNextInt();
             int option = in.nextInt();
             if (isInt){
                 switch (option){
-                    case 1 :
+                    case Constant.RUNTEST :
                     	System.out.println("Enter test code: ");
                     	String testCode = in.next();
                         wrongAnswer = runTest(studentId, testCode);
                         break;
-                    case 2:
-                        //bikin method displayrightasnwer, buat nge print jawaban bener buat setiap quest.id yg salah
-                    	//dari wronganswer
+                    case Constant.RESULT:
+                    	Display.testResult(wrongAnswer, studentId, quiz);
                         break;
-                    case 3:
+                    case Constant.STUDENT_LOGOUT:
                         System.out.println("Logging out .....");
                         in.nextLine();
                         appMenu();
@@ -133,37 +129,32 @@ public class Menu {
         }
         tutorMenu();//tutor log in
     }
-    public static void tutorMenu() {
+    public static void tutorMenu() throws FileNotFoundException {
         while (true){
-            System.out.println("Please choose one of the below option: (Option Number)" +
-                    "\n1.Add a new student.\n2.Add a new tutor\n3.Create Test" +
-                    "\n4.Display All Data Student\n5.Display all questions" +
-                    "\n6.Display best and worst student\n7.Remove a student\n" +
-                    "\n8.Log out.");
+        	Display.tutorMenu();
             boolean isInt = in.hasNextInt();
             int option = in.nextInt();
             if (isInt){
                 switch (option){
-                    case 1:
-                        int stId,year,month,day;
-                        String stName, stSurname;
+                    case Constant.ADD_STUDENT:
+                        String studentName;
+                        int studentId;
                         System.out.println("Name: ");
-                        stName = in.next();
-                        System.out.println("Surname: ");
-                        stSurname = in.next();
+                        studentName = in.next();
                         while (true) {
                             System.out.println("Student ID: ");
-                            stId = in.nextInt();
-                            if (s.getId() == stId) {
-                                uList.addStudent();
+                            studentId = in.nextInt();
+                            if (s.getId() == studentId) {
+                                studentList.addStudent(studentId, studentName);
                                 break;
                             } else
                                 System.out.println("This ID is already registered!");
                         }
                         break;
-                    case 2:
+                    case Constant.ADD_TUTOR:
                         
-                        String ttName, ttSurname, password, ttId;
+                        String ttName, ttSurname, password;
+                        int ttId;
                         System.out.println("Name: ");
                         ttName = in.next();
                         System.out.println("Surname: ");
@@ -171,21 +162,21 @@ public class Menu {
                         while (true){
                             System.out.println("Password: ");
                             password = in.next();
-                            t.validatePassword(password);
+                            validatePassword(password);
                             if (t.getPassword()!=null)
                                 break;
                         }
                         while (true) {
                             System.out.println("Tutor ID: ");
-                            ttId = in.next();
+                            ttId = in.nextInt();
                             if(t.getId()==-1) {
-                            	uList.addTutor(ttId,ttName,ttSurname,password);
+                            	tutorList.addTutor(ttId,ttName,ttSurname,password);
                                 break;
                             } else
                                 System.out.println("This ID is already registered!");
                         }
                         break;
-                    case 3:
+                    case Constant.CREATE_TEST:
                         int points;
                         String qText, qAnswer;
                         System.out.println("Question ID: "+ qId);
@@ -205,30 +196,26 @@ public class Menu {
                         //q.addQuestion(qId,qText,qAnswer,points);
                         qId++;
                         break;
-                    case 4:
+                    case Constant.DISPLAY_STUDENT:
                         int enterId;
                         
-                        System.out.println(uList.getAllStudent());
+                        System.out.println(studentList.getAllStudent());
                         break;
-                    case 5:
+                    case Constant.DISPLAY_QUESTION:
                         //q.getQuestion();
                         break;
-                    case 6:
+                    case Constant.DISPLAY_BEST_WORST_STUDENT:
+                    	System.out.println("Enter Quiz Id: ");
+                    	String idQuiz = in.next();
                     	quizList.showBestWorstPoint(idQuiz);
                         break;
-                    case 7:
-                        String removeId;
+                    case Constant.REMOVE_STUDENT:
+                        int removeId;
                         System.out.println("Student ID: ");
-                        removeId = in.next();
-                        uList.removeStudent(removeId);
+                        removeId = in.nextInt();
+                        studentList.removeStudent(removeId);
                         break;
-                    case 8:
-                        //s.getFailedStudent();
-                        break;
-                    case 9:
-                        System.out.println("Test is taken " + TestTaken + " times.");
-                        break;
-                    case 10:
+                    case Constant.LOGOUT:
                         System.out.println("Logging out .....");
                         in.nextLine();
                         appMenu();
@@ -243,8 +230,8 @@ public class Menu {
 
     }
     
-    public static ArrayList<String> runTest(int idStudent, String code){
-    	ArrayList<String> wrongAnswer = new ArrayList<>();
+    public static ArrayList<Integer> runTest(int idStudent, String code){
+    	ArrayList<Integer> wrongAnswer = new ArrayList<>();
         String answer;
         int points = 0;
         int times = 0;
@@ -259,11 +246,9 @@ public class Menu {
         		 * print question by type
         		 */
         		switch(quiz.getType()) {
-        			case PILIHAN_GANDA:
+        			case Constant.PILIHAN_GANDA:
         				break;
-        			case ESSAY:
-        				break;
-        			case YESorNO:
+        			case Constant.YESorNO:
         				for (int i = 0; i < quiz.getAllQuestion().size(); i++){
                     		System.out.println(i + 1 + ". " + quiz.getAllQuestion().get(i) + "?");
                     		answer = in.nextLine();
@@ -273,25 +258,16 @@ public class Menu {
                     				answer = in.nextLine();
                     			} else break;
                     		}
-                    		/*
-                    		 * cek jawaban (ngambil jawabannya gimana?)
-                    		 * total poin
-                    		 */
-                    		//disini manggil method validate answer, kalo return nya 0, masukin question id ke arraylist wrongAnswer
-                    		//if ((answer.toLowerCase().equals("yes") && q.getQuestionsArray().get(i).isquestionAnswer())||(answer.toLowerCase().equals("no") && !q.getQuestionsArray().get(i).isquestionAnswer()))
-                            //points += q.getQuestionsArray().get(i).getquestionPoints();
+                    		if(validateAnswer(Constant.YESorNO, i+1, answer) == 0) {
+                    			wrongAnswer.add(i+1);
+                    		} else {
+                    			points = points + validateAnswer(Constant.YESorNO, i+1, answer);
+                    		}
         				}
         				break;
         		}
-            		/*
-            		 * set total point
-            		 */
-        			pointRecap= new PointRecapitulation(idStudent, points);
-        			//ini butuh ga?
-                	/*if (quiz.getAllQuestion().size()!=0 && s.getStudentsArray().get(index).getTotalPointsFromTests()==0){
-                		System.out.println("Sorry you failed.");
-                		s.getStudentsArray().get(index).setFailed(true);
-                	}*/
+        		
+        		quiz.addRecap(idStudent, points);
         	}else {
         		System.out.println("There are no quiz");
         	}
@@ -303,70 +279,35 @@ public class Menu {
     /*
      * validating answer
      */
-    public double validateAnswer(int type, String id_question, String answer) {
-    	double point = 0;
-    	switch(type) {
-			case PILIHAN_GANDA:
-				break;
-			case ESSAY:
-				break;
-			case YESorNO:
-				//nanti disini dicek apakah jawaban sama dengan jawaban yang disoal
-				//kalo sama point = point + point dari question
-    	}
+    public static int validateAnswer(int type, int id_question, String answer) {
+    	int point = 0;
+    	Questions question = quiz.getQuestion(id_question);
+    	
+    	if(answer.toLowerCase().equals(question.getQuestionAnswer())) {
+			return question.getQuestionPoint();
+		}
+    	
     	return point;
     }
-
-  //validasi password tutor
-//  public void validatePassword(String password) {
-//      boolean passContainsNr = false;
-//      for (int i = 0; i < 10; i++) {
-//          if (password.contains(Integer.toString(i))) {
-//              passContainsNr = true;
-//          }
-//      }
-//      if (passContainsNr && password.length() > 7) {
-//          this.setPassword(password);
-//          System.out.println("Successfully set password.");
-//      } else if (password.length() > 7 && !passContainsNr) {
-//          System.out.println("Password must include a number!");
-//      } else if (passContainsNr && password.length() < 8) {
-//          System.out.println("Password must be at least 8 character long.");
-//      } else {
-//          System.out.println("Password must have more than 8 characters. It must include a number!");
-//      }
-//  } // check password's conditions
     
+ // check password's conditions
+  public static void validatePassword(String password) {
+      boolean passContainsNr = false;
+      for (int i = 0; i < 10; i++) {
+          if (password.contains(Integer.toString(i))) {
+              passContainsNr = true;
+          }
+      }
+      if (passContainsNr && password.length() > 7) {
+          t.setPassword(password);
+          System.out.println("Successfully set password.");
+      } else if (password.length() > 7 && !passContainsNr) {
+          System.out.println("Password must include a number!");
+      } else if (passContainsNr && password.length() < 8) {
+          System.out.println("Password must be at least 8 character long.");
+      } else {
+          System.out.println("Password must have more than 8 characters. It must include a number!");
+      }
+  }
     
-    //murid nilai terbesar terkecil
-//  public void displayTPForLoggedInSt(int id) {
-//  int index = getIndex(id);
-//  System.out.println("Your total points are: "+students.get(index).getTotalPointsFromTests());
-//} // show total points for logged in student
-
-//public void displayBestWorstStudent() {
-//  if (students.size()==0)
-//      System.out.println("There are no students registered");
-//  else{
-//      int min = students.get(0).getTotalPointsFromTests();
-//      int max = students.get(0).getTotalPointsFromTests();
-//
-//      int indexMax = 0;
-//      int indexMin = 0;
-//
-//      for (int i = 0; i < students.size(); i++) {
-//          if (max < students.get(i).getTotalPointsFromTests()) {
-//              max = students.get(i).getTotalPointsFromTests();
-//              indexMax = i;
-//          }
-//          if (min > students.get(i).getTotalPointsFromTests()) {
-//              min = students.get(i).getTotalPointsFromTests();
-//              indexMin = i;
-//          }
-//      }
-//      System.out.println("Best student is " + students.get(indexMax).getName() + " " + students.get(indexMax).getSurname()
-//              + ": " + max + "points.\nWorst student is " + students.get(indexMin).getName() + " " + students.get(indexMin).getSurname()
-//              + ": " + min + "points.");
-//  }
-//}// display student with highest/lowest points
 }

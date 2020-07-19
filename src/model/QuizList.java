@@ -1,11 +1,19 @@
+package model;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class QuizList {
 	private ArrayList<Quiz> quiz = new ArrayList<>();
 	
-	public void showBestWorstPoint(int idQuiz) {
-		//showbestpoint:cari id student, kalo udh dapet, quiz[i].bestPoint()
+	public void showBestWorstPoint(String idQuiz) {
+		Quiz selectedQuiz;
+		for(Quiz vQuiz : quiz) {
+			if(vQuiz.getIdQuiz() == idQuiz) {
+				selectedQuiz = vQuiz;
+				break;
+			}
+		}
+		
 	}
 
 	public ArrayList<Quiz> getQuiz() {
@@ -29,4 +37,5 @@ public class QuizList {
 	    }
 		return false;
 	}
+	
 }
