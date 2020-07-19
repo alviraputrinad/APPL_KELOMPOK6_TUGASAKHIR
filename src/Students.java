@@ -10,22 +10,15 @@ import java.util.Date;
  */
 public class Students extends User {
 
-    private Date dateOfBirth ;
-    private int totalPointsFromTests;
-    private int timesTakenTest;
-    private boolean failed;
+    private ArrayList<String> test_history = new ArrayList<>();
+    private ArrayList<double> point_history = new ArrayList<>();
     private ArrayList<Students> students = new ArrayList<>();
 
-    public Students(){
+    public Students() {
     }
 
-    public Students(int id, String name, String surname,Date dateOfBirth, int totalPointsFromTests, int timesTakenTest, boolean failed) throws FileNotFoundException {
-
-        super(id, name, surname);
-        this.dateOfBirth = dateOfBirth;
-        this.timesTakenTest = timesTakenTest;
-        this.totalPointsFromTests = totalPointsFromTests;
-        this.failed = failed;
+    public Students(int id, String name) throws FileNotFoundException {
+        super(id, name);
     }
 
     public void addStudent(int student_id, String name, String surname, Date birthday, int totalPointsFromTests, int timesTakenTest, boolean failed) throws FileNotFoundException {
@@ -36,10 +29,6 @@ public class Students extends User {
             txt.println("Student: " + index);
             txt.println("ID: " + students.get(z).getStudent_id());
             txt.println("Name: " + students.get(z).getName());
-            txt.println("Surname: "+students.get(z).getSurname());
-            txt.println("Date of birth: "+ students.get(z).getDateOfBirth());
-            txt.println("Total points: "+students.get(z).getTotalPointsFromTests());
-            txt.println("Times taken test: " + students.get(z).getTimestakenTest());
             txt.println("--------------------");
             txt.flush();
         } //write student from arraylist to txt file
@@ -71,8 +60,7 @@ public class Students extends User {
         int i = getIndex(id);
         if (i != -1) {
             System.out.println("Id: " + id + "\nName: " + students.get(i).getName()
-                    + "\nSurname: " + students.get(i).getSurname() + "\nDate of birth: "
-                    + students.get(i).getDateOfBirth()
+                    + "\nSurname: " + students.get(i).getSurname()
                     + "\nTotal points: " + students.get(i).getTotalPointsFromTests());
         } else
             System.out.println("There is no student with id: " + id);
@@ -127,38 +115,6 @@ public class Students extends User {
 
     public String getName() {
         return super.getName();
-    }
-
-    public String getSurname() {
-        return super.getSurname();
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public int getTotalPointsFromTests() {
-        return totalPointsFromTests;
-    }
-
-    public void setTotalPointsFromTests(int totalPointsFromTests) {
-        this.totalPointsFromTests = totalPointsFromTests;
-    }
-
-    public int getTimestakenTest(){
-        return timesTakenTest;
-    }
-
-    public void setTimesTakenTest(int timesTakenTest) {
-        this.timesTakenTest = timesTakenTest;
-    }
-
-    public boolean isFailed() {
-        return failed;
-    }
-
-    public void setFailed(boolean failed) {
-        this.failed = failed;
     }
 
     public ArrayList<Students> getStudentsArray(){return students;}
