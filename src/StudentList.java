@@ -25,7 +25,7 @@ public class StudentList extends User{
     }
     
     public void removeStudent (int id){
-        if(getIndex(id) != -1) {
+        if(getIndex(id) != null) {
         	students.remove(getIndex(id));
         } else {
         	System.out.println("There is no student with ID: " + id);
@@ -33,9 +33,9 @@ public class StudentList extends User{
     }
     
     public void displayStudent(int id) {
-		int i = getIndex(id);
-		if (i != -1) {
-			System.out.println("Id: " + id + "\nName: " + students.get(i).getName());
+    	Students student = getIndex(id);
+		if (student != null) {
+			System.out.println("Id: " + id + "\nName: " + student.getName());
 		} else {
 			System.out.println("There is no student with id: " + id);
 		}    
@@ -45,12 +45,13 @@ public class StudentList extends User{
     	return super.getId();
     }
     
-    public int getIndex(int id) {
+    public Students getIndex(int id) {
+    	Students student = new Students();
     	for (int i = 0; i < students.size(); i++) {
         	if (students.get(i).getStudent_id() == id) {
-            	return i;
+            	return student;
         	}
     	}
-    	return super.getIndex();
+    	return null;
 	}
 }

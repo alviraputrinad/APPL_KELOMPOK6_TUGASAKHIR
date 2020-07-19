@@ -10,6 +10,7 @@ public class Menu {
     private static Questions q = new Questions();
     private static int qId = 1;
     private static int TestTaken =0;
+    private static StudentList studentList = new StudentList();
 
     public static void runTest (int index){
         String answer;
@@ -67,18 +68,19 @@ public class Menu {
 
     public static void stMenu() throws  FileNotFoundException{
         int id = 0;
+        Students student = studentList.getIndex(id);
         System.out.println("Please enter your ID:");
         while(true) {
             boolean isIdInt = in.hasNextInt();
             id = in.nextInt();
             if(isIdInt){
-                if(s.getIndex(id)==-1){
+                if(student == null){
                     System.out.println("There is no student with ID: "+id);
                     System.out.println("ID: ");
                     in.nextLine();
                     continue;
                 }
-                System.out.println("Welcome, " + s.getFullName(s.getIndex(id)) + "!");
+                System.out.println("Welcome, " + student.getName() + "!");
                 break;
             }else{
                 System.out.println("Please enter your ID!");
@@ -97,13 +99,13 @@ public class Menu {
             if (isInt){
                 switch (option){
                     case 1:
-                        q.getQuestion();
+                        q.getListQuestion();
                         break;
                     case 2:
-                        runTest(s.getIndex(id));
+                        runTest(id);
                         break;
                     case 3:
-                        s.displayTPForLoggedInSt(id);
+                        //s.displayTPForLoggedInSt(id);
                         break;
                     case 4:
                         System.out.println("Logging out .....");
